@@ -1,0 +1,15 @@
+# docker compose file with version 3
+version: "3"
+
+services:
+  # building local docker file in current directory
+  # it will be named as "colab-tests"
+  colab-tests:
+    build: .
+    volumes:
+      # mounting pip directory to tmp
+      - ./tmp:/cache
+    # jupyter running on 8888
+    ports:
+      - "8888:8888"
+    command: jupyter notebook --ip=0.0.0.0 --allow-root
