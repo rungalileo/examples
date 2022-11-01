@@ -1,0 +1,379 @@
+name: test
+
+on:
+  push:
+    branches:
+      # - main
+      - chore/ci-for-example-notebooks
+  pull_request:
+    types: [opened, synchronize]
+
+env:
+  MINIMIZE_FOR_CI: "true"
+  GALILEO_USERNAME: ${{ secrets.GALILEO_USERNAME }}
+  GALILEO_PASSWORD: ${{ secrets.GALILEO_PASSWORD }}
+
+jobs:
+  mltc-pytorch:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --debug --to notebook --execute examples/multi_label_text_classification/Multi_Label_Text_Classification_using_Pytorch_and_🔭_Galileo.ipynb
+
+  mltc-tensorflow:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --to notebook --execute examples/multi_label_text_classification/Multi_Label_Text_Classification_using_TensorFlow_and_🔭_Galileo.ipynb
+
+  ner-hf-trainer:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: |
+
+          # TODO: remove when dataquality 0.7.1 is released
+          pip install dataquality==0.7.1a5
+          jupyter nbconvert --to notebook --execute examples/named_entity_recognition/Named_Entity_Recognition_with_Huggingface_Trainer_and_🔭_Galileo.ipynb
+
+  ner-pytorch:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --to notebook --execute examples/named_entity_recognition/Named_Entity_Recognition_with_Pytorch_and_🔭_Galileo.ipynb
+
+  ner-spacy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --to notebook --execute examples/named_entity_recognition/Named_Entity_Recognition_with_SpaCy_and_🔭_Galileo.ipynb
+
+  ner-tensorflow:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --to notebook --execute examples/named_entity_recognition/Named_Entity_Recognition_with_Tensorflow_and_🔭_Galileo.ipynb
+
+  nli-pytorch:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --to notebook --execute examples/natural_language_inference/Natural_Language_Inference_using_Pytorch_and_🔭_Galileo.ipynb
+
+  nli-tensorflow:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --to notebook --execute examples/natural_language_inference/Natural_Language_Inference_using_TensorFlow_and_🔭_Galileo.ipynb
+
+  tc-hf-trainer:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --to notebook --execute examples/text_classification/Text_Classification_using_Huggingface_Trainer_and_🔭_Galileo.ipynb
+
+  tc-keras:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --to notebook --execute examples/text_classification/Text_Classification_using_Keras_and_🔭_Galileo.ipynb
+
+  tc-pytorch:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --to notebook --execute examples/text_classification/Text_Classification_using_PyTorch_and_🔭_Galileo.ipynb
+
+  tc-tensorflow:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --to notebook --execute examples/text_classification/Text_Classification_using_Tensorflow_and_🔭_Galileo.ipynb
