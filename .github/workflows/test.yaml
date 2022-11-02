@@ -1,12 +1,13 @@
 name: test
 
 on:
+  schedule:
+    - cron: "0 8 * * *"
   push:
     branches:
-      # - main
-      - chore/ci-for-example-notebooks
-  # pull_request:
-  # types: [opened, synchronize]
+      - main
+  pull_request:
+    types: [opened, synchronize]
 
 env:
   MINIMIZE_FOR_CI: "true"
