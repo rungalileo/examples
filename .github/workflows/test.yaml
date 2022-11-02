@@ -5,8 +5,8 @@ on:
     branches:
       # - main
       - chore/ci-for-example-notebooks
-  pull_request:
-    types: [opened, synchronize]
+  # pull_request:
+  # types: [opened, synchronize]
 
 env:
   MINIMIZE_FOR_CI: "true"
