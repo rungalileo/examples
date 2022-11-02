@@ -2,7 +2,8 @@ name: test
 
 on:
   schedule:
-    - cron: "0 8 * * *"
+    # At 08:00 UTC on every day-of-week from Monday through Friday.
+    - cron: "0 8 * * 1-5"
   push:
     branches:
       - main
