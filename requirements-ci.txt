@@ -10,3 +10,4 @@ s3fs >=2022.10.0
 spacy==3.2.1
 seqeval >=1.2.2
 evaluate >=0.3.0
+tensorflow <2.11.0
