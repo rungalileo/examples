@@ -18,6 +18,7 @@ env:
 jobs:
   mltc-pytorch:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.7"]
@@ -48,6 +49,7 @@ jobs:
 
   mltc-tensorflow:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.7"]
@@ -78,6 +80,7 @@ jobs:
 
   ner-hf-trainer:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.7"]
@@ -108,6 +111,7 @@ jobs:
 
   ner-pytorch:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.7"]
@@ -138,6 +142,7 @@ jobs:
 
   ner-spacy:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.7"]
@@ -168,6 +173,7 @@ jobs:
 
   ner-tensorflow:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.7"]
@@ -198,6 +204,7 @@ jobs:
 
   nli-pytorch:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.7"]
@@ -228,6 +235,7 @@ jobs:
 
   nli-tensorflow:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.7"]
@@ -258,6 +266,7 @@ jobs:
 
   tc-hf-trainer:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.7"]
@@ -288,6 +297,7 @@ jobs:
 
   tc-keras:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.7"]
@@ -318,6 +328,7 @@ jobs:
 
   tc-pytorch:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.7"]
@@ -348,6 +359,7 @@ jobs:
 
   tc-pytorch-simple:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.7"]
@@ -378,6 +390,7 @@ jobs:
 
   tc-tensorflow:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.7"]
