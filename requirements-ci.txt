@@ -1,10 +1,10 @@
-notebook >=6.5.1
+notebook==5.7.16
 dataquality >=0.6.1
 datasets >=2.6.1
 transformers >=4.23.1
-ipywidgets >=8.0.2
+ipywidgets==7.7.1
 tensorflow==2.9.2
-torch ==1.12.1
+torch==1.12.1
 torchmetrics==0.10.0
 s3fs >=2022.10.0
 spacy==3.2.1
