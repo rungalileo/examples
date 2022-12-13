@@ -404,6 +404,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: construct footer url
+        id: footer_url
+        run: |
+          SLACK_FOOTER_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          echo "::set-output name=slack_footer_url::${SLACK_FOOTER_URL}"
+
       - name: report status to slack
         if: always()
         uses: rtCamp/action-slack-notify@v2
@@ -416,4 +422,4 @@ jobs:
           SLACK_COLOR: ${{ ((needs.mltc-pytorch.result == 'success') && 'success') || 'failure' }}
           SLACK_TITLE: "Examples Repo CI"
           SLACK_MESSAGE: "Click the link in the footer to investigate any broken example notebooks."
-          SLACK_FOOTER: "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          SLACK_FOOTER: ${{ steps.footer_url.outputs.slack_footer_url }}
