@@ -9,6 +9,8 @@ on:
       - main
   pull_request:
     types: [opened, synchronize]
+  
+  workflow_dispatch:
 
 env:
   MINIMIZE_FOR_CI: "true"
