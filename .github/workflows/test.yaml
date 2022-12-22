@@ -18,8 +18,26 @@ env:
   GALILEO_PASSWORD: ${{ secrets.GALILEO_PASSWORD }}
 
 jobs:
+  paths-filter:
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.filter.outputs.mltc-pytorch }}
+      output2: ${{ steps.filter.outputs.mltc-tensorflow }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          mltc-pytorch:
+            - 'examples/multi_label_text_classification/Multi_Label_Text_Classification_using_Pytorch_and_🔭_Galileo.ipynb'
+          mltc-tensorflow:
+            - 'examples/multi_label_text_classification/Multi_Label_Text_Classification_using_TensorFlow_and_🔭_Galileo.ipynb'
+
   mltc-pytorch:
     runs-on: ubuntu-latest
+    needs: paths-filter
+    if: ${{github.event_name == 'pull_request' && needs.paths-filter.outputs.output1 == 'true' }}
     strategy:
       matrix:
         python-version: ["3.9"]
@@ -50,6 +68,8 @@ jobs:
 
   mltc-tensorflow:
     runs-on: ubuntu-latest
+    needs: paths-filter
+    if: ${{github.event_name == 'pull_request' && needs.paths-filter.outputs.output2 == 'true' }}
     strategy:
       matrix:
         python-version: ["3.9"]
