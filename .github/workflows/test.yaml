@@ -19,6 +19,7 @@ env:
 
 jobs:
   paths-filter:
+    # https://stackoverflow.com/questions/70708306/github-actions-run-step-job-in-a-workflow-if-changes-happen-in-specific-folde?rq=1
     runs-on: ubuntu-latest
     outputs:
       mltc-pytorch: ${{ steps.filter.outputs.mltc-pytorch }}
