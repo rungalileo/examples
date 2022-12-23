@@ -451,7 +451,7 @@ jobs:
 
   send-slack-notification:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name != 'pull_request' }}
+    if: ${{ always() }}
     needs:
       [
         mltc-pytorch,
