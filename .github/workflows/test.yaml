@@ -260,6 +260,9 @@ jobs:
       - name: install dependencies
         run: pip install -r requirements-ci.txt
 
+      - name: install pre-trained language model
+        run: python -m spacy download en_core_web_sm
+
       - name: run notebook
         run: jupyter nbconvert --to notebook --execute examples/named_entity_recognition/Named_Entity_Recognition_Inference_with_SpaCy_and_🔭_Galileo.ipynb
 
