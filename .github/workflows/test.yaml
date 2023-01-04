@@ -6,7 +6,7 @@ on:
     # - cron: "0 8 * * 1-5"
   push:
     branches:
-      - v1
+      - chore/consolidation_v1
   pull_request:
     types: [opened, synchronize]
   
