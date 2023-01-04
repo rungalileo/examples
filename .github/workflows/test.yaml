@@ -16,6 +16,9 @@ env:
   MINIMIZE_FOR_CI: "true"
   GALILEO_USERNAME: ${{ secrets.GALILEO_USERNAME }}
   GALILEO_PASSWORD: ${{ secrets.GALILEO_PASSWORD }}
+  GALILEO_CONSOLE_URL_ENTERPRISE: ${{ secrets.GALILEO_CONSOLE_URL_ENTERPRISE }}
+  GALILEO_USERNAME_ENTERPRISE: ${{ secrets.GALILEO_USERNAME_ENTERPRISE }}
+  GALILEO_PASSWORD_ENTERPRISE: ${{ secrets.GALILEO_PASSWORD_ENTERPRISE }}
 
 jobs:
   paths-filter:
@@ -27,6 +30,7 @@ jobs:
       ner-hf-trainer: ${{ steps.filter.outputs.ner-hf-trainer }}
       ner-pytorch: ${{ steps.filter.outputs.ner-pytorch }}
       ner-spacy: ${{ steps.filter.outputs.ner-spacy }}
+      ner-spacy-inf: ${{ steps.filter.outputs.ner-spacy-inf }}
       ner-tensorflow: ${{ steps.filter.outputs.ner-tensorflow }}
       nli-pytorch: ${{ steps.filter.outputs.nli-pytorch }}
       nli-tensorflow: ${{ steps.filter.outputs.nli-tensorflow }}
@@ -50,6 +54,8 @@ jobs:
             - 'examples/named_entity_recognition/Named_Entity_Recognition_with_Pytorch_and_🔭_Galileo.ipynb'
           ner-spacy:
             - 'examples/named_entity_recognition/Named_Entity_Recognition_with_SpaCy_and_🔭_Galileo.ipynb'
+          ner-spacy-inf:
+            - 'examples/named_entity_recognition/Named_Entity_Recognition_Inference_with_SpaCy_and_🔭_Galileo.ipynb'
           ner-tensorflow:
             - 'examples/named_entity_recognition/Named_Entity_Recognition_with_Tensorflow_and_🔭_Galileo.ipynb'
           nli-pytorch:
@@ -224,6 +230,41 @@ jobs:
 
       - name: run notebook
         run: jupyter nbconvert --to notebook --execute examples/named_entity_recognition/Named_Entity_Recognition_with_SpaCy_and_🔭_Galileo.ipynb
+
+  ner-spacy-inf:
+    runs-on: ubuntu-latest
+    needs: paths-filter
+    if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.ner-spacy-inf == 'true') }}
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: install pre-trained language model
+        run: python -m spacy download en_core_web_sm
+
+      - name: run notebook
+        run: jupyter nbconvert --to notebook --execute examples/named_entity_recognition/Named_Entity_Recognition_Inference_with_SpaCy_and_🔭_Galileo.ipynb
 
   ner-tensorflow:
     runs-on: ubuntu-latest
@@ -459,6 +500,7 @@ jobs:
         ner-hf-trainer,
         ner-pytorch,
         ner-spacy,
+        ner-spacy-inf,
         ner-tensorflow,
         nli-pytorch,
         nli-tensorflow,
@@ -490,7 +532,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.ML_TEAM_EXAMPLES_WEBHOOK }}
           SLACK_USERNAME: "Examples Repo CI"
           SLACK_ICON_EMOJI: ":telescope:"
-          SLACK_COLOR: ${{ ((needs.mltc-pytorch.result == 'success') && (needs.mltc-tensorflow.result == 'success') && (needs.ner-hf-trainer.result == 'success') && (needs.ner-pytorch.result == 'success') && (needs.ner-spacy.result == 'success') && (needs.ner-tensorflow.result == 'success') && (needs.nli-pytorch.result == 'success') && (needs.nli-tensorflow.result == 'success') && (needs.tc-hf-trainer.result == 'success') && (needs.tc-keras.result == 'success') && (needs.tc-pytorch.result == 'success') && (needs.tc-tensorflow.result == 'success') && 'success') || 'failure' }}
+          SLACK_COLOR: ${{ ((needs.mltc-pytorch.result == 'success') && (needs.mltc-tensorflow.result == 'success') && (needs.ner-hf-trainer.result == 'success') && (needs.ner-pytorch.result == 'success') && (needs.ner-spacy.result == 'success') && (needs.ner-spacy-inf.result == 'success') && (needs.ner-tensorflow.result == 'success') && (needs.nli-pytorch.result == 'success') && (needs.nli-tensorflow.result == 'success') && (needs.tc-hf-trainer.result == 'success') && (needs.tc-keras.result == 'success') && (needs.tc-pytorch.result == 'success') && (needs.tc-tensorflow.result == 'success') && 'success') || 'failure' }}
           SLACK_TITLE: "Examples Repo CI"
           SLACK_MESSAGE: "Click the link in the footer to investigate any broken example notebooks."
           SLACK_FOOTER: ${{ steps.footer_url.outputs.slack_footer_url }}
