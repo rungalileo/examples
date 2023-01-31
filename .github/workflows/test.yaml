@@ -9,7 +9,7 @@ on:
       - main
   pull_request:
     types: [opened, synchronize]
-  
+
   workflow_dispatch:
 
 env:
@@ -38,38 +38,41 @@ jobs:
       tc-keras: ${{ steps.filter.outputs.tc-keras }}
       tc-pytorch: ${{ steps.filter.outputs.tc-pytorch }}
       tc-tensorflow: ${{ steps.filter.outputs.tc-tensorflow }}
+      cv-pytorch: ${{ steps.filter.outputs.cv-pytorch }}
     steps:
-    - uses: actions/checkout@v2
-    - uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: |
-          mltc-pytorch:
-            - 'examples/multi_label_text_classification/Multi_Label_Text_Classification_using_Pytorch_and_🔭_Galileo.ipynb'
-          mltc-tensorflow:
-            - 'examples/multi_label_text_classification/Multi_Label_Text_Classification_using_TensorFlow_and_🔭_Galileo.ipynb'
-          ner-hf-trainer:
-            - 'examples/named_entity_recognition/Named_Entity_Recognition_with_Huggingface_Trainer_and_🔭_Galileo.ipynb'
-          ner-pytorch:
-            - 'examples/named_entity_recognition/Named_Entity_Recognition_with_Pytorch_and_🔭_Galileo.ipynb'
-          ner-spacy:
-            - 'examples/named_entity_recognition/Named_Entity_Recognition_with_SpaCy_and_🔭_Galileo.ipynb'
-          ner-spacy-inf:
-            - 'examples/named_entity_recognition/Named_Entity_Recognition_Inference_with_SpaCy_and_🔭_Galileo.ipynb'
-          ner-tensorflow:
-            - 'examples/named_entity_recognition/Named_Entity_Recognition_with_Tensorflow_and_🔭_Galileo.ipynb'
-          nli-pytorch:
-            - 'examples/natural_language_inference/Natural_Language_Inference_using_Pytorch_and_🔭_Galileo.ipynb'
-          nli-tensorflow:
-            - 'examples/natural_language_inference/Natural_Language_Inference_using_TensorFlow_and_🔭_Galileo.ipynb'
-          tc-hf-trainer:
-            - 'examples/text_classification/Text_Classification_using_Huggingface_Trainer_and_🔭_Galileo.ipynb'
-          tc-keras:
-            - 'examples/text_classification/Text_Classification_using_Keras_and_🔭_Galileo.ipynb'
-          tc-pytorch:
-            - 'examples/text_classification/Text_Classification_using_PyTorch_and_🔭_Galileo.ipynb'
-          tc-tensorflow:
-            - 'examples/text_classification/Text_Classification_using_Tensorflow_and_🔭_Galileo.ipynb'
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            mltc-pytorch:
+              - 'examples/multi_label_text_classification/Multi_Label_Text_Classification_using_Pytorch_and_🔭_Galileo.ipynb'
+            mltc-tensorflow:
+              - 'examples/multi_label_text_classification/Multi_Label_Text_Classification_using_TensorFlow_and_🔭_Galileo.ipynb'
+            ner-hf-trainer:
+              - 'examples/named_entity_recognition/Named_Entity_Recognition_with_Huggingface_Trainer_and_🔭_Galileo.ipynb'
+            ner-pytorch:
+              - 'examples/named_entity_recognition/Named_Entity_Recognition_with_Pytorch_and_🔭_Galileo.ipynb'
+            ner-spacy:
+              - 'examples/named_entity_recognition/Named_Entity_Recognition_with_SpaCy_and_🔭_Galileo.ipynb'
+            ner-spacy-inf:
+              - 'examples/named_entity_recognition/Named_Entity_Recognition_Inference_with_SpaCy_and_🔭_Galileo.ipynb'
+            ner-tensorflow:
+              - 'examples/named_entity_recognition/Named_Entity_Recognition_with_Tensorflow_and_🔭_Galileo.ipynb'
+            nli-pytorch:
+              - 'examples/natural_language_inference/Natural_Language_Inference_using_Pytorch_and_🔭_Galileo.ipynb'
+            nli-tensorflow:
+              - 'examples/natural_language_inference/Natural_Language_Inference_using_TensorFlow_and_🔭_Galileo.ipynb'
+            tc-hf-trainer:
+              - 'examples/text_classification/Text_Classification_using_Huggingface_Trainer_and_🔭_Galileo.ipynb'
+            tc-keras:
+              - 'examples/text_classification/Text_Classification_using_Keras_and_🔭_Galileo.ipynb'
+            tc-pytorch:
+              - 'examples/text_classification/Text_Classification_using_PyTorch_and_🔭_Galileo.ipynb'
+            tc-tensorflow:
+              - 'examples/text_classification/Text_Classification_using_Tensorflow_and_🔭_Galileo.ipynb'
+            cv-pytorch:
+              - 'examples/image_classification/Image_Classification_using_PyTorch_and_🔭_Galileo.ipynb'
 
   mltc-pytorch:
     runs-on: ubuntu-latest
@@ -490,6 +493,38 @@ jobs:
       - name: run notebook
         run: jupyter nbconvert --to notebook --execute examples/text_classification/Text_Classification_using_Tensorflow_and_🔭_Galileo.ipynb
 
+  cv-pytorch:
+    runs-on: ubuntu-latest
+    needs: paths-filter
+    if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.cv-pytorch == 'true' ) }}
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --debug --to notebook --execute examples/image_classification/Image_Classification_using_PyTorch_and_🔭_Galileo.ipynb
+
   send-slack-notification:
     runs-on: ubuntu-latest
     if: ${{ always() }}
@@ -508,6 +543,7 @@ jobs:
         tc-keras,
         tc-pytorch,
         tc-tensorflow,
+        cv-pytorch,
       ]
     permissions:
       contents: "read"
@@ -532,7 +568,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.ML_TEAM_EXAMPLES_WEBHOOK }}
           SLACK_USERNAME: "Examples Repo CI"
           SLACK_ICON_EMOJI: ":telescope:"
-          SLACK_COLOR: ${{ ((needs.mltc-pytorch.result == 'success') && (needs.mltc-tensorflow.result == 'success') && (needs.ner-hf-trainer.result == 'success') && (needs.ner-pytorch.result == 'success') && (needs.ner-spacy.result == 'success') && (needs.ner-spacy-inf.result == 'success') && (needs.ner-tensorflow.result == 'success') && (needs.nli-pytorch.result == 'success') && (needs.nli-tensorflow.result == 'success') && (needs.tc-hf-trainer.result == 'success') && (needs.tc-keras.result == 'success') && (needs.tc-pytorch.result == 'success') && (needs.tc-tensorflow.result == 'success') && 'success') || 'failure' }}
+          SLACK_COLOR: ${{ ((needs.cv-pytorch.result == 'success') && (needs.mltc-pytorch.result == 'success') && (needs.mltc-tensorflow.result == 'success') && (needs.ner-hf-trainer.result == 'success') && (needs.ner-pytorch.result == 'success') && (needs.ner-spacy.result == 'success') && (needs.ner-spacy-inf.result == 'success') && (needs.ner-tensorflow.result == 'success') && (needs.nli-pytorch.result == 'success') && (needs.nli-tensorflow.result == 'success') && (needs.tc-hf-trainer.result == 'success') && (needs.tc-keras.result == 'success') && (needs.tc-pytorch.result == 'success') && (needs.tc-tensorflow.result == 'success') && 'success') || 'failure' }}
           SLACK_TITLE: "Examples Repo CI"
           SLACK_MESSAGE: "Click the link in the footer to investigate any broken example notebooks."
           SLACK_FOOTER: ${{ steps.footer_url.outputs.slack_footer_url }}
