@@ -9,7 +9,7 @@ on:
       - main
   pull_request:
     types: [opened, synchronize]
-  
+
   workflow_dispatch:
 
 env:
@@ -21,6 +21,13 @@ env:
   GALILEO_PASSWORD_ENTERPRISE: ${{ secrets.GALILEO_PASSWORD_ENTERPRISE }}
 
 jobs:
+  markdown-link-check:
+    if: ${{ false }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: gaurav-nelson/github-action-markdown-link-check@v1
+
   paths-filter:
     # https://stackoverflow.com/questions/70708306/github-actions-run-step-job-in-a-workflow-if-changes-happen-in-specific-folde?rq=1
     runs-on: ubuntu-latest
@@ -39,45 +46,46 @@ jobs:
       tc-pytorch: ${{ steps.filter.outputs.tc-pytorch }}
       tc-tensorflow: ${{ steps.filter.outputs.tc-tensorflow }}
     steps:
-    - uses: actions/checkout@v2
-    - uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: |
-          mltc-pytorch:
-            - 'examples/multi_label_text_classification/Multi_Label_Text_Classification_using_Pytorch_and_🔭_Galileo.ipynb'
-          mltc-tensorflow:
-            - 'examples/multi_label_text_classification/Multi_Label_Text_Classification_using_TensorFlow_and_🔭_Galileo.ipynb'
-          ner-hf-trainer:
-            - 'examples/named_entity_recognition/Named_Entity_Recognition_with_Huggingface_Trainer_and_🔭_Galileo.ipynb'
-          ner-pytorch:
-            - 'examples/named_entity_recognition/Named_Entity_Recognition_with_Pytorch_and_🔭_Galileo.ipynb'
-          ner-spacy:
-            - 'examples/named_entity_recognition/Named_Entity_Recognition_with_SpaCy_and_🔭_Galileo.ipynb'
-          ner-spacy-inf:
-            - 'examples/named_entity_recognition/Named_Entity_Recognition_Inference_with_SpaCy_and_🔭_Galileo.ipynb'
-          ner-tensorflow:
-            - 'examples/named_entity_recognition/Named_Entity_Recognition_with_Tensorflow_and_🔭_Galileo.ipynb'
-          nli-pytorch:
-            - 'examples/natural_language_inference/Natural_Language_Inference_using_Pytorch_and_🔭_Galileo.ipynb'
-          nli-tensorflow:
-            - 'examples/natural_language_inference/Natural_Language_Inference_using_TensorFlow_and_🔭_Galileo.ipynb'
-          tc-hf-trainer:
-            - 'examples/text_classification/Text_Classification_using_Huggingface_Trainer_and_🔭_Galileo.ipynb'
-          tc-keras:
-            - 'examples/text_classification/Text_Classification_using_Keras_and_🔭_Galileo.ipynb'
-          tc-pytorch:
-            - 'examples/text_classification/Text_Classification_using_PyTorch_and_🔭_Galileo.ipynb'
-          tc-tensorflow:
-            - 'examples/text_classification/Text_Classification_using_Tensorflow_and_🔭_Galileo.ipynb'
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            mltc-pytorch:
+              - 'examples/multi_label_text_classification/Multi_Label_Text_Classification_using_Pytorch_and_🔭_Galileo.ipynb'
+            mltc-tensorflow:
+              - 'examples/multi_label_text_classification/Multi_Label_Text_Classification_using_TensorFlow_and_🔭_Galileo.ipynb'
+            ner-hf-trainer:
+              - 'examples/named_entity_recognition/Named_Entity_Recognition_with_Huggingface_Trainer_and_🔭_Galileo.ipynb'
+            ner-pytorch:
+              - 'examples/named_entity_recognition/Named_Entity_Recognition_with_Pytorch_and_🔭_Galileo.ipynb'
+            ner-spacy:
+              - 'examples/named_entity_recognition/Named_Entity_Recognition_with_SpaCy_and_🔭_Galileo.ipynb'
+            ner-spacy-inf:
+              - 'examples/named_entity_recognition/Named_Entity_Recognition_Inference_with_SpaCy_and_🔭_Galileo.ipynb'
+            ner-tensorflow:
+              - 'examples/named_entity_recognition/Named_Entity_Recognition_with_Tensorflow_and_🔭_Galileo.ipynb'
+            nli-pytorch:
+              - 'examples/natural_language_inference/Natural_Language_Inference_using_Pytorch_and_🔭_Galileo.ipynb'
+            nli-tensorflow:
+              - 'examples/natural_language_inference/Natural_Language_Inference_using_TensorFlow_and_🔭_Galileo.ipynb'
+            tc-hf-trainer:
+              - 'examples/text_classification/Text_Classification_using_Huggingface_Trainer_and_🔭_Galileo.ipynb'
+            tc-keras:
+              - 'examples/text_classification/Text_Classification_using_Keras_and_🔭_Galileo.ipynb'
+            tc-pytorch:
+              - 'examples/text_classification/Text_Classification_using_PyTorch_and_🔭_Galileo.ipynb'
+            tc-tensorflow:
+              - 'examples/text_classification/Text_Classification_using_Tensorflow_and_🔭_Galileo.ipynb'
 
   mltc-pytorch:
     runs-on: ubuntu-latest
     needs: paths-filter
     if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.mltc-pytorch == 'true') }}
+    timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.8"]
       fail-fast: false
 
     permissions:
@@ -101,15 +109,47 @@ jobs:
         run: pip install -r requirements-ci.txt
 
       - name: run notebook
-        run: jupyter nbconvert --debug --to notebook --execute examples/multi_label_text_classification/Multi_Label_Text_Classification_using_Pytorch_and_🔭_Galileo.ipynb
+        run: jupyter nbconvert --debug --to notebook --execute examples/multi_label_text_classification/Multi_Label_Text_Classification_using_PyTorch_and_🔭_Galileo.ipynb
+
+  mltc-pytorch-simple:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        python-version: ["3.8"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --debug --to notebook --execute examples/multi_label_text_classification/Multi_Label_Text_Classification_using_PyTorch_and_🔭_Galileo_Simple.ipynb
 
   mltc-tensorflow:
     runs-on: ubuntu-latest
     needs: paths-filter
     if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.mltc-tensorflow == 'true') }}
+    timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.8"]
       fail-fast: false
 
     permissions:
@@ -139,9 +179,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: paths-filter
     if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.ner-hf-trainer == 'true') }}
+    timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.8"]
       fail-fast: false
 
     permissions:
@@ -171,9 +212,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: paths-filter
     if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.ner-pytorch == 'true') }}
+    timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.8"]
       fail-fast: false
 
     permissions:
@@ -197,15 +239,47 @@ jobs:
         run: pip install -r requirements-ci.txt
 
       - name: run notebook
-        run: jupyter nbconvert --to notebook --execute examples/named_entity_recognition/Named_Entity_Recognition_with_Pytorch_and_🔭_Galileo.ipynb
+        run: jupyter nbconvert --to notebook --execute examples/named_entity_recognition/Named_Entity_Recognition_with_PyTorch_and_🔭_Galileo.ipynb
+
+  ner-pytorch-simple:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        python-version: ["3.8"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --to notebook --execute examples/named_entity_recognition/Named_Entity_Recognition_with_PyTorch_and_🔭_Galileo_Simple.ipynb
 
   ner-spacy:
     runs-on: ubuntu-latest
     needs: paths-filter
     if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.ner-spacy == 'true') }}
+    timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.8"]
       fail-fast: false
 
     permissions:
@@ -235,9 +309,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: paths-filter
     if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.ner-spacy-inf == 'true') }}
+    timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.8"]
       fail-fast: false
 
     permissions:
@@ -268,11 +343,9 @@ jobs:
 
   ner-tensorflow:
     runs-on: ubuntu-latest
-    needs: paths-filter
-    if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.ner-tensorflow == 'true') }}
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.8"]
       fail-fast: false
 
     permissions:
@@ -302,9 +375,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: paths-filter
     if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.nli-pytorch == 'true') }}
+    timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.8"]
       fail-fast: false
 
     permissions:
@@ -328,15 +402,47 @@ jobs:
         run: pip install -r requirements-ci.txt
 
       - name: run notebook
-        run: jupyter nbconvert --to notebook --execute examples/natural_language_inference/Natural_Language_Inference_using_Pytorch_and_🔭_Galileo.ipynb
+        run: jupyter nbconvert --to notebook --execute examples/natural_language_inference/Natural_Language_Inference_using_PyTorch_and_🔭_Galileo.ipynb
+
+  nli-pytorch-simple:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        python-version: ["3.8"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --to notebook --execute examples/natural_language_inference/Natural_Language_Inference_using_PyTorch_and_🔭_Galileo_Simple.ipynb
 
   nli-tensorflow:
     runs-on: ubuntu-latest
     needs: paths-filter
     if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.nli-tensorflow == 'true') }}
+    timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.8"]
       fail-fast: false
 
     permissions:
@@ -366,9 +472,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: paths-filter
     if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.tc-hf-trainer == 'true') }}
+    timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.8"]
       fail-fast: false
 
     permissions:
@@ -398,9 +505,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: paths-filter
     if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.tc-keras == 'true') }}
+    timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.8"]
       fail-fast: false
 
     permissions:
@@ -430,9 +538,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: paths-filter
     if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.tc-pytorch == 'true') }}
+    timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.8"]
       fail-fast: false
 
     permissions:
@@ -458,13 +567,45 @@ jobs:
       - name: run notebook
         run: jupyter nbconvert --to notebook --execute examples/text_classification/Text_Classification_using_PyTorch_and_🔭_Galileo.ipynb
 
+  tc-pytorch-simple:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        python-version: ["3.8"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: run notebook
+        run: jupyter nbconvert --to notebook --execute examples/text_classification/Text_Classification_using_PyTorch_and_🔭_Galileo_Simple.ipynb
+
   tc-tensorflow:
     runs-on: ubuntu-latest
     needs: paths-filter
     if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.tc-tensorflow == 'true') }}
+    timeout-minutes: 30
     strategy:
       matrix:
-        python-version: ["3.9"]
+        python-version: ["3.8"]
       fail-fast: false
 
     permissions:
