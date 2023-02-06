@@ -166,3 +166,4 @@ results/
 finetuned
 launch.json
 data/
+*.nbconvert*
