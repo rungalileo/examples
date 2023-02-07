@@ -47,3 +47,7 @@ echo "Done!\n"
 echo "Running examples/text_classification/Text_Classification_using_Tensorflow_and_🔭_Galileo.ipynb"
 MINIMIZE_FOR_CI=true jupyter nbconvert --to notebook --execute examples/text_classification/Text_Classification_using_Tensorflow_and_🔭_Galileo.ipynb
 echo "Done!\n"
+
+echo "Running examples/image_classification/Image_Classification_using_PyTorch_and_🔭_Galileo.ipynb"
+MINIMIZE_FOR_CI=true jupyter nbconvert --to notebook --execute examples/image_classification/Image_Classification_using_PyTorch_and_🔭_Galileo.ipynb
+echo "Done!\n"
