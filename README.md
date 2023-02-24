@@ -22,7 +22,7 @@ Examples on using Galileo in various machine learning settings
 | Framework  | Github | Colab |
 | ------------- | ------------- | ------------- |
 | TensorFlow  | [github link](https://github.com/rungalileo/examples/blob/main/examples/natural_language_inference/Natural_Language_Inference_using_TensorFlow_and_%F0%9F%94%AD_Galileo.ipynb)  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rungalileo/examples/blob/main/examples/natural_language_inference/Natural_Language_Inference_using_TensorFlow_and_%F0%9F%94%AD_Galileo.ipynb) |
-| PyTorch  | [github link](https://github.com/rungalileo/examples/blob/main/examples/natural_language_inference/Natural_Language_Inference_using_Pytorch_and_%F0%9F%94%AD_Galileo.ipynb)  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rungalileo/examples/blob/main/examples/natural_language_inference/Natural_Language_Inference_using_Pytorch_and_%F0%9F%94%AD_Galileo.ipynb) |
+| PyTorch  | [github link](https://github.com/rungalileo/examples/blob/main/examples/natural_language_inference/Natural_Language_Inference_using_Pytorch_and_%F0%9F%94%AD_Galileo.ipynb)  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rungalileo/examples/blob/main/examples/natural_language_inference/Natural_Language_Inference_using_PyTorch_and_%F0%9F%94%AD_Galileo.ipynb) |
 
 ## Multilabel Text Classification
 | Framework  | Github | Colab |
