@@ -167,3 +167,5 @@ finetuned
 launch.json
 data/
 *.nbconvert*
+
+**/download_images*.sh
