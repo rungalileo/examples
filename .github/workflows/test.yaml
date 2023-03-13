@@ -702,7 +702,6 @@ jobs:
         id: footer_url
         run: |
           SLACK_FOOTER_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-          # echo "::set-output name=slack_footer_url::${SLACK_FOOTER_URL}"
           echo "slack_footer_url=${SLACK_FOOTER_URL}" >> $GITHUB_OUTPUT
 
       - name: report status to slack
