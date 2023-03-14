@@ -34,4 +34,4 @@ Examples on using Galileo in various machine learning settings
 | Framework  | Github | Colab |
 | ------------- | ------------- | ------------- |
 | PyTorch  | [github link](https://github.com/rungalileo/examples/blob/main/examples/image_classification/Image_Classification_using_PyTorch_and_%F0%9F%94%AD_Galileo.ipynb)  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rungalileo/examples/blob/main/examples/image_classification/Image_Classification_using_PyTorch_and_%F0%9F%94%AD_Galileo.ipynb) |
-
+| PyTorch  | [github link](https://github.com/rungalileo/examples/blob/main/examples/image_classification/Image_Classification_using_PyTorch_and_%F0%9F%94%AD_Galileo_Remote_Data.ipynb)  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rungalileo/examples/blob/main/examples/image_classification/Image_Classification_using_PyTorch_and_%F0%9F%94%AD_Galileo_Remote_Data.ipynb) |
