@@ -6,7 +6,7 @@ on:
     - cron: "0 5 * * 1-5"
   push:
     branches:
-      - main
+      - sc-4717
 
 env:
   MINIMIZE_FOR_CI: "false"
