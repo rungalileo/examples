@@ -40,8 +40,8 @@ def _modalinclude(path: str) -> bool:
         )
     ],
     cpu=4,
-    memory=2048,
-    timeout=60 * 60,
+    memory=4096,
+    timeout=60 * 60 * 3,
 )
 def run(notebook_path: str) -> None:
     import subprocess
