@@ -31,7 +31,6 @@ def _modalinclude(path: str) -> bool:
 
 
 @stub.function(
-    gpu=gpu.Any(),
     secret=Secret.from_name("examples-populator-secret"),
     mounts=[
         Mount.from_local_dir(
