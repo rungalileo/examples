@@ -16,7 +16,6 @@ env:
 jobs:
   mltc-example:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.8"]
@@ -43,11 +42,10 @@ jobs:
         run: pip install -r requirements-ci.txt
 
       - name: run notebook
-        run: jupyter nbconvert --debug --to notebook --execute examples/multi_label_text_classification/Multi_Label_Text_Classification_using_Pytorch_and_🔭_Galileo.ipynb
+        run: jupyter nbconvert --debug --to notebook --execute examples/multi_label_text_classification/Multi_Label_Text_Classification_using_Pytorch_and_🔭_Galileo_Simple.ipynb
 
   ner-example:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.8"]
@@ -74,11 +72,10 @@ jobs:
         run: pip install -r requirements-ci.txt
 
       - name: run notebook
-        run: jupyter nbconvert --to notebook --execute examples/named_entity_recognition/Named_Entity_Recognition_with_Pytorch_and_🔭_Galileo.ipynb
+        run: jupyter nbconvert --to notebook --execute examples/named_entity_recognition/Named_Entity_Recognition_with_Pytorch_and_🔭_Galileo_Simple.ipynb
 
   nli-example:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.8"]
@@ -105,11 +102,10 @@ jobs:
         run: pip install -r requirements-ci.txt
 
       - name: run notebook
-        run: jupyter nbconvert --to notebook --execute examples/natural_language_inference/Natural_Language_Inference_using_Pytorch_and_🔭_Galileo.ipynb
+        run: jupyter nbconvert --to notebook --execute examples/natural_language_inference/Natural_Language_Inference_using_Pytorch_and_🔭_Galileo_Simple.ipynb
 
   tc-example:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
     strategy:
       matrix:
         python-version: ["3.8"]
@@ -136,7 +132,7 @@ jobs:
         run: pip install -r requirements-ci.txt
 
       - name: run notebook
-        run: jupyter nbconvert --to notebook --execute examples/text_classification/Text_Classification_using_PyTorch_and_🔭_Galileo.ipynb
+        run: jupyter nbconvert --to notebook --execute examples/text_classification/Text_Classification_using_PyTorch_and_🔭_Galileo_Simple.ipynb
 
   ic-example:
     runs-on: ubuntu-latest
