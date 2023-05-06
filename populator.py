@@ -15,10 +15,14 @@ modal run populator.py --notebook-path <path-to-notebook>
 ```
 """
 
+import os
+
 from modal import Image, Mount, Secret, Stub, gpu
 
-image = Image.debian_slim().pip_install_from_requirements(
-    requirements_txt="requirements-ci.txt"
+image = (
+    Image.debian_slim()
+    .env({"MINIMIZE_FOR_CI": os.getenv("MINIMIZE_FOR_CI", "false")})
+    .pip_install_from_requirements(requirements_txt="requirements-ci.txt")
 )
 stub = Stub(
     name="populator",
@@ -67,4 +71,5 @@ def run(notebook_path: str) -> None:
     gpu=gpu.Any(),
 )
 def run_gpu(notebook_path: str) -> None:
+    _run(notebook_path)
     _run(notebook_path)
