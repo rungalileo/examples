@@ -9,7 +9,7 @@ on:
       - sc-4717
 
 env:
-  MINIMIZE_FOR_CI: "false"
+  MINIMIZE_FOR_CI: "true" # change to "false" to run notebooks with full output
   GALILEO_USERNAME: ${{ secrets.GALILEO_USERNAME }}
   GALILEO_PASSWORD: ${{ secrets.GALILEO_PASSWORD }}
   GALILEO_MODAL_TOKEN_ID: ${{ secrets.GALILEO_MODAL_TOKEN_ID }}
@@ -189,7 +189,7 @@ jobs:
           GALILEO_MODAL_TOKEN_SECRET: ${{ secrets.GALILEO_MODAL_TOKEN_SECRET }}
         run: |
           modal token set --token-id ${{ env.GALILEO_MODAL_TOKEN_ID }} --token-secret ${{ env.GALILEO_MODAL_TOKEN_SECRET }}
-          modal run populator.py::run --notebook-path examples/image_classification/Image_Classification_using_PyTorch_and_🔭_Galileo.ipynb
+          modal run populator.py::run_gpu --notebook-path examples/image_classification/Image_Classification_using_PyTorch_and_🔭_Galileo.ipynb
 
   send-slack-notification:
     runs-on: ubuntu-latest

@@ -24,27 +24,47 @@ stub = Stub(
     name="populator",
     image=image,
 )
+secret = Secret.from_name("examples-populator-secret")
 
 
 def _modalinclude(path: str) -> bool:
     return path.endswith(".ipynb") and "checkpoint" not in path
 
 
-@stub.function(
-    secret=Secret.from_name("examples-populator-secret"),
-    mounts=[
-        Mount.from_local_dir(
-            local_path="examples",
-            remote_path="/root/examples",
-            condition=_modalinclude,
-        )
-    ],
-    cpu=4,
-    memory=4096,
-    timeout=60 * 60 * 3,
-)
-def run(notebook_path: str) -> None:
+mounts = [
+    Mount.from_local_dir(
+        local_path="examples",
+        remote_path="/root/examples",
+        condition=_modalinclude,
+    )
+]
+
+
+def _run(path: str) -> None:
     import subprocess
 
-    cmd = f"jupyter nbconvert --debug --to notebook --execute {notebook_path}"
+    cmd = f"jupyter nbconvert --debug --to notebook --execute {path}"
     subprocess.run(cmd, shell=True)
+
+
+@stub.function(
+    secret=secret,
+    mounts=mounts,
+    cpu=1,
+    memory=1024,
+    timeout=60 * 60 * 5,
+)
+def run(notebook_path: str) -> None:
+    _run(notebook_path)
+
+
+@stub.function(
+    secret=secret,
+    mounts=mounts,
+    cpu=1,
+    memory=1024,
+    timeout=60 * 60 * 5,
+    gpu=gpu.Any(),
+)
+def run_gpu(notebook_path: str) -> None:
+    _run(notebook_path)
