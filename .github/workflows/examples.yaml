@@ -49,7 +49,7 @@ jobs:
           GALILEO_MODAL_TOKEN_SECRET: ${{ secrets.GALILEO_MODAL_TOKEN_SECRET }}
         run: |
           modal token set --token-id ${{ env.GALILEO_MODAL_TOKEN_ID }} --token-secret ${{ env.GALILEO_MODAL_TOKEN_SECRET }}
-          modal run populator.py::run --notebook-path examples/multi_label_text_classification/Multi_Label_Text_Classification_using_Pytorch_and_🔭_Galileo_Simple.ipynb
+          modal run populator.py::run_gpu --notebook-path examples/multi_label_text_classification/Multi_Label_Text_Classification_using_Pytorch_and_🔭_Galileo_Simple.ipynb
 
   # ner-example:
   #   runs-on: ubuntu-latest
