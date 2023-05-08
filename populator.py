@@ -54,8 +54,8 @@ def _run(path: str) -> None:
 @stub.function(
     secret=secret,
     mounts=mounts,
-    cpu=2,
-    memory=2048,
+    cpu=4,
+    memory=4096,
     timeout=60 * 60 * 5,
 )
 def run(notebook_path: str) -> None:
@@ -65,10 +65,10 @@ def run(notebook_path: str) -> None:
 @stub.function(
     secret=secret,
     mounts=mounts,
-    cpu=2,
-    memory=2048,
+    cpu=4,
+    memory=4096,
     timeout=60 * 60 * 5,
-    gpu=gpu.Any(),
+    gpu=gpu.T4(),
 )
 def run_gpu(notebook_path: str) -> None:
     _run(notebook_path)
