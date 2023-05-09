@@ -7,9 +7,8 @@ on:
   push:
     branches:
       - main
-  # TODO: uncomment this before merging
-  # pull_request:
-  #   types: [opened, synchronize]
+  pull_request:
+    types: [opened, synchronize]
 
 env:
   MINIMIZE_FOR_CI: "true"

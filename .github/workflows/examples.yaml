@@ -4,9 +4,6 @@ on:
   schedule:
     # At 05:00 UTC on Tuesdays
     - cron: "0 5 * * 2"
-  push:
-    branches:
-      - sc-4717
 
 env:
   MINIMIZE_FOR_CI: "false" # change to "false" to run notebooks with full output
