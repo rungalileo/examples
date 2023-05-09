@@ -169,3 +169,4 @@ data/
 *.nbconvert*
 
 **/download_images*.sh
+.python-version

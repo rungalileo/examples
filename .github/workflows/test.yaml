@@ -10,8 +10,6 @@ on:
   pull_request:
     types: [opened, synchronize]
 
-  workflow_dispatch:
-
 env:
   MINIMIZE_FOR_CI: "true"
   GALILEO_USERNAME: ${{ secrets.GALILEO_USERNAME }}
