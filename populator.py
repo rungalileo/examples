@@ -1,6 +1,7 @@
 """populator
 
-This helper script is used to populate example run content that new Galileo users see in example runs after they sign up.
+This helper script is used to populate example run content that new Galileo users see 
+in example runs after they sign up.
 
 To run this script, install `modal`
 
@@ -11,7 +12,7 @@ pip install modal-client
 Then run the following command with the path to the notebook you want to run
 
 ```bash
-modal run populator.py --notebook-path <path-to-notebook>
+modal run populator.py::run --notebook-path <path-to-notebook>
 ```
 """
 
