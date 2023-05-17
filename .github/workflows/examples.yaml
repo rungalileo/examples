@@ -46,7 +46,7 @@ jobs:
           GALILEO_MODAL_TOKEN_SECRET: ${{ secrets.GALILEO_MODAL_TOKEN_SECRET }}
         run: |
           modal token set --token-id ${{ env.GALILEO_MODAL_TOKEN_ID }} --token-secret ${{ env.GALILEO_MODAL_TOKEN_SECRET }}
-          modal run populator.py::run_gpu --notebook-path examples/multi_label_text_classification/Multi_Label_Text_Classification_using_Pytorch_and_🔭_Galileo_Simple.ipynb
+          modal run populator_gpu.py::run --notebook-path examples/multi_label_text_classification/Multi_Label_Text_Classification_using_Pytorch_and_🔭_Galileo_Simple.ipynb
 
   ner-example:
     runs-on: ubuntu-latest
@@ -81,42 +81,7 @@ jobs:
           GALILEO_MODAL_TOKEN_SECRET: ${{ secrets.GALILEO_MODAL_TOKEN_SECRET }}
         run: |
           modal token set --token-id ${{ env.GALILEO_MODAL_TOKEN_ID }} --token-secret ${{ env.GALILEO_MODAL_TOKEN_SECRET }}
-          modal run populator.py::run_gpu --notebook-path examples/named_entity_recognition/Named_Entity_Recognition_with_Pytorch_and_🔭_Galileo_Simple.ipynb
-
-  nli-example:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.8"]
-      fail-fast: false
-
-    permissions:
-      contents: "read"
-      id-token: "write"
-
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: set up python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: install dependencies
-        run: |
-          pip install -r requirements-ci.txt
-          pip install -r requirements-dev.txt
-
-      - name: run notebook
-        env:
-          GALILEO_MODAL_TOKEN_ID: ${{ secrets.GALILEO_MODAL_TOKEN_ID }}
-          GALILEO_MODAL_TOKEN_SECRET: ${{ secrets.GALILEO_MODAL_TOKEN_SECRET }}
-        run: |
-          modal token set --token-id ${{ env.GALILEO_MODAL_TOKEN_ID }} --token-secret ${{ env.GALILEO_MODAL_TOKEN_SECRET }}
-          modal run populator.py::run_gpu --notebook-path examples/natural_language_inference/Natural_Language_Inference_using_Pytorch_and_🔭_Galileo_Simple.ipynb
+          modal run populator_gpu.py::run --notebook-path examples/named_entity_recognition/Named_Entity_Recognition_with_Pytorch_and_🔭_Galileo_Simple.ipynb
 
   tc-example:
     runs-on: ubuntu-latest
@@ -151,7 +116,7 @@ jobs:
           GALILEO_MODAL_TOKEN_SECRET: ${{ secrets.GALILEO_MODAL_TOKEN_SECRET }}
         run: |
           modal token set --token-id ${{ env.GALILEO_MODAL_TOKEN_ID }} --token-secret ${{ env.GALILEO_MODAL_TOKEN_SECRET }}
-          modal run populator.py::run_gpu --notebook-path examples/text_classification/Text_Classification_using_PyTorch_and_🔭_Galileo_Simple.ipynb
+          modal run populator_gpu.py::run --notebook-path examples/text_classification/Text_Classification_using_PyTorch_and_🔭_Galileo_Simple.ipynb
 
   ic-example:
     runs-on: ubuntu-latest
@@ -186,11 +151,11 @@ jobs:
           GALILEO_MODAL_TOKEN_SECRET: ${{ secrets.GALILEO_MODAL_TOKEN_SECRET }}
         run: |
           modal token set --token-id ${{ env.GALILEO_MODAL_TOKEN_ID }} --token-secret ${{ env.GALILEO_MODAL_TOKEN_SECRET }}
-          modal run populator.py::run_gpu --notebook-path examples/image_classification/Image_Classification_using_PyTorch_and_🔭_Galileo.ipynb
+          modal run populator_gpu.py::run --notebook-path examples/image_classification/Image_Classification_using_PyTorch_and_🔭_Galileo.ipynb
 
   send-slack-notification:
     runs-on: ubuntu-latest
-    needs: [mltc-example, ner-example, nli-example, tc-example, ic-example]
+    needs: [mltc-example, ner-example, tc-example, ic-example]
     permissions:
       contents: "read"
       id-token: "write"
@@ -214,7 +179,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.ML_TEAM_EXAMPLES_WEBHOOK }}
           SLACK_USERNAME: "Example Runs Root Content Populator"
           SLACK_ICON_EMOJI: ":telescope:"
-          SLACK_COLOR: ${{ ((needs.mltc-example.result == 'success') && (needs.ner-example.result == 'success') && (needs.nli-example.result == 'success') && (needs.tc-example.result == 'success') && (needs.ic-example.result == 'success') && 'success') || 'failure' }}
+          SLACK_COLOR: ${{ ((needs.mltc-example.result == 'success') && (needs.ner-example.result == 'success') && (needs.tc-example.result == 'success') && (needs.ic-example.result == 'success') && 'success') || 'failure' }}
           SLACK_TITLE: "Example Runs Root Content Populator"
           SLACK_MESSAGE: "Click the link in the footer to investigate any broken example notebooks."
           SLACK_FOOTER: ${{ steps.footer_url.outputs.slack_footer_url }}
