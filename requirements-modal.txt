@@ -1,0 +1,7 @@
+ipywidgets>=8.0.2
+notebook>=6.5.1
+torch >=1.12.1
+torchmetrics==0.10.0
+
+--extra-index-url=https://pypi.nvidia.com/
+dataquality[cuda]==0.8.41
