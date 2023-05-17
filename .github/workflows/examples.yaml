@@ -214,7 +214,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.ML_TEAM_EXAMPLES_WEBHOOK }}
           SLACK_USERNAME: "Example Runs Root Content Populator"
           SLACK_ICON_EMOJI: ":telescope:"
-          SLACK_COLOR: ${{ ((needs.mltc-example.result == 'success') && (needs.ner-example.result == 'success') && (needs.tc-example.result == 'success') && (needs.ic-example.result == 'success') && 'success') && (needs.od-example.result == 'success') || 'failure' }}
+          SLACK_COLOR: ${{ ((needs.mltc-example.result == 'success') && (needs.ner-example.result == 'success') && (needs.tc-example.result == 'success') && (needs.ic-example.result == 'success') && (needs.od-example.result == 'success') && 'success') || 'failure' }}
           SLACK_TITLE: "Example Runs Root Content Populator"
           SLACK_MESSAGE: "Click the link in the footer to investigate any broken example notebooks."
           SLACK_FOOTER: ${{ steps.footer_url.outputs.slack_footer_url }}
