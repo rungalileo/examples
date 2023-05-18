@@ -51,3 +51,7 @@ echo "Done!\n"
 echo "Running examples/image_classification/Image_Classification_using_PyTorch_and_🔭_Galileo.ipynb"
 MINIMIZE_FOR_CI=true jupyter nbconvert --to notebook --execute examples/image_classification/Image_Classification_using_PyTorch_and_🔭_Galileo.ipynb
 echo "Done!\n"
+
+echo "Running examples/object_detection/Object_Detection_using_Ultralytics_and_🔭_Galileo.ipynb"
+MINIMIZE_FOR_CI=true jupyter nbconvert --to notebook --execute examples/object_detection/Object_Detection_using_Ultralytics_and_🔭_Galileo.ipynb
+echo "Done!\n"
