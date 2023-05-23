@@ -6,6 +6,7 @@ notebook >=6.5.1
 s3fs >=2022.10.0
 seqeval >=1.2.2
 spacy==3.2.1
+typing-extensions==4.5.0
 tensorflow <2.11.0
 torch >=1.12.1
 torchmetrics==0.10.0
