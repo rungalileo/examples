@@ -279,7 +279,7 @@ jobs:
   ner-spacy:
     runs-on: ubuntu-latest
     needs: paths-filter
-    if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.ner-spacy == 'true') }}
+    # if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.ner-spacy == 'true') }}
     timeout-minutes: 30
     strategy:
       matrix:
@@ -312,7 +312,7 @@ jobs:
   ner-spacy-inf:
     runs-on: ubuntu-latest
     needs: paths-filter
-    if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.ner-spacy-inf == 'true') }}
+    # if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.ner-spacy-inf == 'true') }}
     timeout-minutes: 30
     strategy:
       matrix:
