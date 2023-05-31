@@ -55,3 +55,7 @@ echo "Done!\n"
 echo "Running examples/object_detection/Object_Detection_using_Ultralytics_and_🔭_Galileo.ipynb"
 MINIMIZE_FOR_CI=true jupyter nbconvert --to notebook --execute examples/object_detection/Object_Detection_using_Ultralytics_and_🔭_Galileo.ipynb
 echo "Done!\n"
+
+echo "Running examples/semantic_segmentation/Semantic_Segmentation_Using_🔭_Galileo.ipynb"
+MINIMIZE_FOR_CI=true jupyter nbconvert --to notebook --execute examples/semantic_segmentation/Semantic_Segmentation_Using_🔭_Galileo.ipynb
+echo "Done!\n"
