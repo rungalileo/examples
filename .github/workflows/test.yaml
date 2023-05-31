@@ -45,6 +45,7 @@ jobs:
       tc-tensorflow: ${{ steps.filter.outputs.tc-tensorflow }}
       ic-pytorch: ${{ steps.filter.outputs.ic-pytorch }}
       od-ultralytics: ${{ steps.filter.outputs.od-ultralytics }}
+      semantic-segmentation-pytorch: ${{ steps.filter.outputs.semantic-segmentation-pytorch }}
     steps:
       - uses: actions/checkout@v3
       - uses: dorny/paths-filter@v2
