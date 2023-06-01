@@ -160,6 +160,9 @@ tmp/
 *.csv
 *.jsonl
 *.ann
+*.png
+*.jpg
+*.jpeg
 tests/notebooks/dev/
 results/
 
