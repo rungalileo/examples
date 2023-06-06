@@ -774,7 +774,7 @@ jobs:
         run: python scripts/demo_datasets_regex.py
         
       - name: run notebook
-        run: jupyter nbconvert --debug --to notebook --execute ${{needs.paths-filter.outputs.tc-setfit-transformers}}
+        run: jupyter nbconvert --debug --to notebook --execute examples/text_classification/Text_Classification_using_SetFit_and_🔭_Galileo.ipynb
 
   send-slack-notification:
     runs-on: ubuntu-latest
