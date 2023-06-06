@@ -34,4 +34,4 @@ files = glob.glob('**/*.ipynb', recursive=True)
 # Iterate over each file in the directory
 for filename in files:
     if filename.endswith(".ipynb"):
-        replace_quoted_strings(os.path.join(dir_path, filename), replace_dict)
+        replace_quoted_strings(filename, replace_dict)
