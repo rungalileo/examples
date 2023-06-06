@@ -2,6 +2,7 @@ import os
 import json
 import nbformat
 from nbformat import v4 as nbf
+import glob
 
 def replace_quoted_strings(filename, replace_dict):
     # Load .ipynb file
@@ -28,9 +29,9 @@ replace_dict = {
 }
 
 # Directory with .ipynb files
-dir_path = "/path/to/your/notebook/directory"
+files = glob.glob('**/*.ipynb', recursive=True)
 
 # Iterate over each file in the directory
-for filename in os.listdir(dir_path):
+for filename in files:
     if filename.endswith(".ipynb"):
         replace_quoted_strings(os.path.join(dir_path, filename), replace_dict)
