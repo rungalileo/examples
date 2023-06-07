@@ -45,6 +45,7 @@ jobs:
       tc-tensorflow: ${{ steps.filter.outputs.tc-tensorflow }}
       ic-pytorch: ${{ steps.filter.outputs.ic-pytorch }}
       od-ultralytics: ${{ steps.filter.outputs.od-ultralytics }}
+      tc-setfit-transformers: ${{ steps.filter.outputs.tc-setfit-transformers }}
       semantic-segmentation-pytorch: ${{ steps.filter.outputs.semantic-segmentation-pytorch }}
     steps:
       - uses: actions/checkout@v3
@@ -78,6 +79,8 @@ jobs:
               - 'examples/text_classification/Text_Classification_using_PyTorch_and_🔭_Galileo.ipynb'
             tc-tensorflow:
               - 'examples/text_classification/Text_Classification_using_Tensorflow_and_🔭_Galileo.ipynb'
+            tc-setfit-transformers:
+              - 'examples/text_classification/Text_Classification_using_SetFit_and_🔭_Galileo.ipynb'
             ic-pytorch:
               - 'examples/image_classification/Image_Classification_using_PyTorch_and_🔭_Galileo.ipynb'
             od-ultralytics:
@@ -737,6 +740,41 @@ jobs:
 
       - name: run notebook
         run: jupyter nbconvert --debug --to notebook --execute examples/semantic_segmentation/Semantic_Segmentation_Using_🔭_Galileo.ipynb
+
+  tc-setfit-transformers:
+    runs-on: ubuntu-latest
+    needs: paths-filter
+    if: ${{ github.event_name != 'pull_request' || (github.event_name == 'pull_request' && needs.paths-filter.outputs.tc-setfit-transformers == 'true' ) }}
+    strategy:
+      matrix:
+        python-version: ["3.9"]
+      fail-fast: false
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+          cache-dependency-path: "requirements-ci.txt"
+
+      - name: install dependencies
+        run: pip install -r requirements-ci.txt
+
+      - name: convert data
+        run: python scripts/demo_datasets_regex.py
+        
+      - name: run notebook
+        run: jupyter nbconvert --debug --to notebook --execute examples/text_classification/Text_Classification_using_SetFit_and_🔭_Galileo.ipynb
 
   send-slack-notification:
     runs-on: ubuntu-latest
