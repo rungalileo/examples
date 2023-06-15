@@ -1,6 +1,7 @@
 name: examples
 
 on:
+  workflow_dispatch:
   schedule:
     # At 05:00 UTC on Tuesdays
     - cron: "0 5 * * 2"

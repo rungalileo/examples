@@ -1,6 +1,7 @@
 name: test
 
 on:
+  workflow_dispatch:
   schedule:
     # At 08:00 UTC on every day-of-week from Monday through Friday.
     - cron: "0 8 * * 1-5"
@@ -772,7 +773,7 @@ jobs:
 
       - name: convert data
         run: python scripts/demo_datasets_regex.py
-        
+
       - name: run notebook
         run: jupyter nbconvert --debug --to notebook --execute examples/text_classification/Text_Classification_using_SetFit_and_🔭_Galileo.ipynb
 
