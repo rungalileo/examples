@@ -1,4 +1,4 @@
-dataquality==0.8.54a0
+dataquality==0.8.54a1
 datasets >2.7.1
 evaluate >=0.3.0
 ipywidgets >=8.0.2
