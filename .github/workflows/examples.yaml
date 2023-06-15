@@ -222,7 +222,7 @@ jobs:
           GALILEO_MODAL_TOKEN_SECRET: ${{ secrets.GALILEO_MODAL_TOKEN_SECRET }}
         run: |
           modal token set --token-id ${{ env.GALILEO_MODAL_TOKEN_ID }} --token-secret ${{ env.GALILEO_MODAL_TOKEN_SECRET }}
-          modal run ./scripts/populator_gpu.py::run --notebook-path examples/semantic_segmentation/Semantic_Segmentation_Using_🔭_Galileo.ipynb
+          modal run ./scripts/populator.py::run --notebook-path examples/semantic_segmentation/Semantic_Segmentation_Using_🔭_Galileo.ipynb
 
   send-slack-notification:
     runs-on: ubuntu-latest

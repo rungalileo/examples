@@ -22,8 +22,9 @@ from modal import Image, Mount, Secret, Stub
 
 image = (
     Image.debian_slim()
+    .apt_install(["wget", "unzip", "libgl1", "libgl1-mesa-glx", "libglib2.0-0"])
     .env({"MINIMIZE_FOR_CI": os.getenv("MINIMIZE_FOR_CI", "true")})
-    .pip_install_from_requirements(requirements_txt="requirements-modal.txt")
+    .pip_install_from_requirements(requirements_txt="requirements-modal-cpu.txt")
 )
 stub = Stub(
     name="populator",
