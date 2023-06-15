@@ -12,17 +12,19 @@ pip install modal-client
 Then run the following command with the path to the notebook you want to run
 
 ```bash
-modal run populator.py::run --notebook-path <path-to-notebook>
+modal run ./scripts/populator.py::run --notebook-path <path-to-notebook>
+modal run ./scripts/populator.py::run_gpu --notebook-path <path-to-notebook>
 ```
 """
 
 import os
 
-from modal import Image, Mount, Secret, Stub
+from modal import Image, Mount, Secret, Stub, gpu
 
 image = (
     Image.debian_slim()
-    .env({"MINIMIZE_FOR_CI": os.getenv("MINIMIZE_FOR_CI", "true")})
+    .apt_install(["wget", "unzip", "libgl1", "libgl1-mesa-glx", "libglib2.0-0"])
+    .env({"MINIMIZE_FOR_CI": os.getenv("MINIMIZE_FOR_CI", "false")})
     .pip_install_from_requirements(requirements_txt="requirements-modal.txt")
 )
 stub = Stub(
@@ -60,4 +62,16 @@ def _run(path: str) -> None:
     timeout=60 * 60 * 5,
 )
 def run(notebook_path: str) -> None:
+    _run(notebook_path)
+
+
+@stub.function(
+    secret=secret,
+    mounts=mounts,
+    cpu=4,
+    memory=4096,
+    timeout=60 * 60 * 5,
+    gpu=gpu.T4(),
+)
+def run_gpu(notebook_path: str) -> None:
     _run(notebook_path)
