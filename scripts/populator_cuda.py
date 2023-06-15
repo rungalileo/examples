@@ -12,7 +12,7 @@ pip install modal-client
 Then run the following command with the path to the notebook you want to run
 
 ```bash
-modal run populator_cuda.py::run --notebook-path <path-to-notebook>
+modal run ./scripts/populator_cuda.py::run --notebook-path <path-to-notebook>
 ```
 """
 
