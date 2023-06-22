@@ -45,3 +45,8 @@ Notebook examples on using Galileo for various machine learning tasks.
 | Framework  | Github | Colab |
 | ------------- | ------------- | ------------- |
 | Ultralytics (YOLOv8)  | [github link](https://github.com/rungalileo/examples/blob/main/examples/object_detection/Object_Detection_using_Ultralytics_and_🔭_Galileo.ipynb)  | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rungalileo/examples/blob/main/examples/object_detection/Object_Detection_using_Ultralytics_and_%F0%9F%94%AD_Galileo.ipynb) |
+
+## Semantic Segmentation
+| Framework  | Github | Colab |
+| ------------- | ------------- | ------------- |
+| PyTorch   | [github link](https://github.com/rungalileo/examples/blob/main/examples/semantic_segmentation/Semantic_Segmentation_Using_🔭_Galileo.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rungalileo/examples/blob/main/examples/semantic_segmentation/Semantic_Segmentation_Using_🔭_Galileo.ipynb) |

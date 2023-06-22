@@ -12,7 +12,7 @@ pip install modal-client
 Then run the following command with the path to the notebook you want to run
 
 ```bash
-modal run populator_gpu.py::run --notebook-path <path-to-notebook>
+modal run ./scripts/populator_cuda.py::run --notebook-path <path-to-notebook>
 ```
 """
 
@@ -21,13 +21,13 @@ from modal import Image, Mount, Secret, Stub, gpu
 image = Image.from_dockerhub(
     "nvidia/cuda:11.7.0-devel-ubuntu20.04",
     setup_dockerfile_commands=[
-        "RUN apt-get update -y && apt-get install -y git python3-pip",
+        "RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get install -y wget unzip git python3-pip libgl1 libgl1-mesa-glx libglib2.0-0",
         "RUN ln -s /usr/bin/python3 /usr/bin/python",
         "ENV MINIMIZE_FOR_CI=false",
     ],
-).pip_install_from_requirements(requirements_txt="requirements-modal.txt")
+).pip_install_from_requirements(requirements_txt="requirements-modal-cuda.txt")
 stub = Stub(
-    name="populator",
+    name="populator_cuda",
     image=image,
 )
 secret = Secret.from_name("examples-populator-secret")
