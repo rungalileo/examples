@@ -1,5 +1,6 @@
 name: test
 
+
 on:
   schedule:
     # At 08:00 UTC on every day-of-week from Monday through Friday.
@@ -9,6 +10,7 @@ on:
       - main
   pull_request:
     types: [opened, synchronize]
+  workflow_dispatch:
 
 env:
   MINIMIZE_FOR_CI: "true"
@@ -29,6 +31,8 @@ jobs:
   paths-filter:
     # https://stackoverflow.com/questions/70708306/github-actions-run-step-job-in-a-workflow-if-changes-happen-in-specific-folde?rq=1
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'workflow_dispatch' }}
+
     outputs:
       mltc-pytorch: ${{ steps.filter.outputs.mltc-pytorch }}
       mltc-tensorflow: ${{ steps.filter.outputs.mltc-tensorflow }}
