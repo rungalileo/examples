@@ -50,7 +50,7 @@ def _run(path: str) -> None:
     import subprocess
 
     cmd = f"jupyter nbconvert --debug --to notebook --execute {path}"
-    subprocess.run(cmd, shell=True)
+    subprocess.run(cmd, shell=True, check=True)
 
 
 @stub.function(
