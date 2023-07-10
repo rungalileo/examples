@@ -308,10 +308,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
-          cache-dependency-path: "requirements-ci.txt"
+          cache-dependency-path: "requirements-ci-spacy.txt"
 
       - name: install dependencies
-        run: pip install -r requirements-ci.txt
+        run: pip install -r requirements-ci-spacy.txt
 
       - name: run notebook
         run: jupyter nbconvert --to notebook --execute examples/named_entity_recognition/Named_Entity_Recognition_with_SpaCy_and_🔭_Galileo.ipynb
@@ -341,10 +341,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
-          cache-dependency-path: "requirements-ci.txt"
+          cache-dependency-path: "requirements-ci-spacy.txt"
 
       - name: install dependencies
-        run: pip install -r requirements-ci.txt
+        run: pip install -r requirements-ci-spacy.txt
 
       - name: install pre-trained language model
         run: python -m spacy download en_core_web_sm
