@@ -152,7 +152,7 @@ jobs:
           GALILEO_MODAL_TOKEN_SECRET: ${{ secrets.GALILEO_MODAL_TOKEN_SECRET }}
         run: |
           modal token set --token-id ${{ env.GALILEO_MODAL_TOKEN_ID }} --token-secret ${{ env.GALILEO_MODAL_TOKEN_SECRET }}
-          modal run ./scripts/populator_cuda.py::run --notebook-path examples/image_classification/Image_Classification_using_PyTorch_and_🔭_Galileo.ipynb
+          modal run ./scripts/populator_cuda.py::run --notebook-path examples/image_classification/Image_Classification_using_PyTorch_and_🔭_Galileo_HF_data.ipynb
 
   od-example:
     runs-on: ubuntu-latest
