@@ -5,4 +5,4 @@ torchmetrics==0.10.0
 ultralytics >=8.0.105
 
 --extra-index-url=https://pypi.nvidia.com/
-dataquality[cuda]
+dataquality[cuda]>=0.9.5

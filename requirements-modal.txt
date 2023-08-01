@@ -3,4 +3,4 @@ notebook>=6.5.1
 torch >=1.12.1
 torchmetrics==0.10.0
 ultralytics >=8.0.105
-dataquality
+dataquality >=0.9.5
