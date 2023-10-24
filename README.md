@@ -59,10 +59,3 @@ Notebook examples on using Galileo for various machine learning tasks.
 | Framework  | Github | Colab |
 | ------------- | ------------- | ------------- |
 | PyTorch   | [github link](https://github.com/rungalileo/examples/blob/main/examples/semantic_segmentation/Semantic_Segmentation_Using_🔭_Galileo.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rungalileo/examples/blob/main/examples/semantic_segmentation/Semantic_Segmentation_Using_🔭_Galileo.ipynb) |
-
-
-## Sequence to Sequence
-| Framework  | Github | Colab |
-| ------------- | ------------- | ------------- |
-| Manual Logger   | [github link](https://github.com/rungalileo/examples/blob/main/examples/sequence_to_sequence/LLM_Fine_Tuning_using_%F0%9F%A4%97Encoder_Decoder_Models%F0%9F%A4%97_and_%F0%9F%94%AD_Galileo.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rungalileo/examples/blob/main/examples/semantic_segmentation/Semantic_Segmentation_Using_🔭_Galileo.ipynb) |
-
