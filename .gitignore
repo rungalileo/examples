@@ -173,3 +173,5 @@ data/
 
 **/download_images*.sh
 .python-version
+
+!assets/csv_upload/training_small.csv
