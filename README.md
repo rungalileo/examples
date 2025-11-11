@@ -1,5 +1,5 @@
 # Galileo Examples
-Notebook examples on using Galileo for various machine learning tasks.
+Notebook examples of using [Galileo](https://www.galileo.ai/) for various machine learning tasks.
 
 # LLM examples
 
